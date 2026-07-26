@@ -12,37 +12,39 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Set up Python 3.11
-        uses: actions/setup-python@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-
-      - name: Install System Dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \ libgl1 \libglib2.0-0
+          cache: "pip"
+      # - name: Install System Dependencies
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get install -y \
+      #       libgl1 \
+      #       libglib2.0-0
 
       - name: Install Python Dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Download Haar Cascade & Train Models
+      - name: Download Haar Cascade
         run: |
           curl -sSL -o data/haarcascade_frontalface_default.xml https://raw.githubusercontent.com/opencv/opencv/master/data/haarcascade_frontalface_default.xml
-          python scripts/train_all_models.py
-          python scripts/seed_database.py
 
       - name: Run Pytest Suite
         run: |
           PYTHONPATH=. pytest -v
 
       - name: Set up Node.js for Frontend
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: "20"
+          cache: "npm"
+          cache-dependency-path: frontend/package-lock.json
 
       - name: Build React Frontend
         run: |
