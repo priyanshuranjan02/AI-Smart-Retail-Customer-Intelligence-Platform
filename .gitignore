@@ -1,0 +1,32 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment
+.env
+
+# Models (optional if too large)
+*.h5
+*.pt
+
+# macOS
+.DS_Store
+
+# Node
+frontend/node_modules/
+
+# Logs
+*.log
+
+# IDE
+.vscode/
+
+# Build
+dist/
+build/
+
+# Cache
+.pytest_cache/

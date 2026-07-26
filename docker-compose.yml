@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  api-gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: smart-retail-api
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=production
+      - API_KEY=smart-retail-secret-key-2026
+      - DATABASE_URL=sqlite:///./smart_retail.db
+    volumes:
+      - ./data:/app/data
+      - ./app/models:/app/app/models
+    restart: always
+
+  frontend:
+    image: node:20-alpine
+    container_name: smart-retail-ui
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "3000:3000"
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+    depends_on:
+      - api-gateway
+    restart: always

@@ -1,0 +1,159 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": [
+        "Hi",
+        "Hello",
+        "Hey",
+        "Good morning",
+        "Good afternoon",
+        "Is anyone there?",
+        "Greetings",
+        "Hey there"
+      ],
+      "responses": [
+        "Hello! Welcome to Smart Retail Customer Support. How can I assist you today?",
+        "Hi there! Glad to help. What can I do for you today?",
+        "Greetings! How may I assist your shopping experience today?"
+      ]
+    },
+    {
+      "tag": "farewell",
+      "patterns": [
+        "Bye",
+        "Goodbye",
+        "See you later",
+        "Have a nice day",
+        "Thanks bye",
+        "Catch you later",
+        "I am leaving"
+      ],
+      "responses": [
+        "Thank you for reaching out to Smart Retail! Have a wonderful day!",
+        "Goodbye! We hope to see you again soon.",
+        "Have a great day ahead! Feel free to ask if you need anything else."
+      ]
+    },
+    {
+      "tag": "store_hours",
+      "patterns": [
+        "What are your opening hours?",
+        "When is the store open?",
+        "Store timing",
+        "What time do you close?",
+        "Are you open on weekends?",
+        "Hours of operation",
+        "Business hours"
+      ],
+      "responses": [
+        "Our stores are open Monday through Saturday from 9:00 AM to 9:00 PM, and Sundays from 10:00 AM to 6:00 PM.",
+        "We are open daily! Monday-Saturday: 9am-9pm, Sunday: 10am-6pm."
+      ]
+    },
+    {
+      "tag": "returns",
+      "patterns": [
+        "How do I return a product?",
+        "What is your return policy?",
+        "Can I exchange an item?",
+        "Return policy",
+        "I want to return my order",
+        "30 day return",
+        "How long do I have to return?"
+      ],
+      "responses": [
+        "We offer a 30-day hassle-free return policy for unused items with original packaging and receipt.",
+        "You can return any item within 30 days of purchase at any store counter or via our online return portal."
+      ]
+    },
+    {
+      "tag": "refunds",
+      "patterns": [
+        "When will I get my refund?",
+        "Refund status",
+        "How long does refund process take?",
+        "Money back",
+        "Where is my money refunded?",
+        "Refund timeframe"
+      ],
+      "responses": [
+        "Refunds are processed within 3-5 business days back to your original payment method once the returned item is inspected.",
+        "Once approved, credit card refunds take 3-5 working days. Store credit is issued instantly!"
+      ]
+    },
+    {
+      "tag": "shipping",
+      "patterns": [
+        "What are the shipping charges?",
+        "Do you provide free shipping?",
+        "Delivery time",
+        "How fast is shipping?",
+        "Do you ship internationally?",
+        "Shipping options"
+      ],
+      "responses": [
+        "We offer FREE standard shipping on all orders over $50. Standard delivery takes 2-4 business days. Express 1-day shipping is also available.",
+        "Orders over $50 ship free! Standard shipping takes 2-4 days."
+      ]
+    },
+    {
+      "tag": "order_status",
+      "patterns": [
+        "Where is my order?",
+        "Track my package",
+        "Order status",
+        "How can I track my shipment?",
+        "My order hasn't arrived",
+        "Tracking link"
+      ],
+      "responses": [
+        "You can track your order by providing your Order ID or visiting the 'Order Tracking' tab in your profile dashboard.",
+        "Please check your order confirmation email for the tracking link, or enter your Order ID in your customer dashboard."
+      ]
+    },
+    {
+      "tag": "payment",
+      "patterns": [
+        "What payment methods do you accept?",
+        "Can I pay with credit card?",
+        "Do you accept PayPal or Apple Pay?",
+        "Cash on delivery",
+        "Payment options"
+      ],
+      "responses": [
+        "We accept Visa, MasterCard, American Express, PayPal, Apple Pay, Google Pay, and Cash on Delivery for select regions.",
+        "We accept all major credit/debit cards, Apple Pay, Google Pay, PayPal, and Gift Cards."
+      ]
+    },
+    {
+      "tag": "product_inquiry",
+      "patterns": [
+        "Do you have shoes in stock?",
+        "What categories of clothes do you sell?",
+        "Electronics availability",
+        "Groceries and fresh items",
+        "Do you sell leather bags?",
+        "Available items"
+      ],
+      "responses": [
+        "Our catalog features Shoes, Clothes, Electronics, Groceries, and Bags! You can search or use our Product Classifier for instant item info.",
+        "We stock a wide variety of footwear, apparel, consumer electronics, fresh groceries, and premium bags."
+      ]
+    },
+    {
+      "tag": "discounts",
+      "patterns": [
+        "Are there any sales or discounts?",
+        "Promo code",
+        "Loyalty program rewards",
+        "Do returning customers get discounts?",
+        "Special offers"
+      ],
+      "responses": [
+        "Yes! Returning loyalty members get an automatic 15% discount detected via facial recognition at checkout. Use promo code SMART15 online!",
+        "Our smart retail platform automatically applies VIP rewards to returning customers at our smart checkout kiosks."
+      ]
+    }
+  ]
+}
