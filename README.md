@@ -2,6 +2,12 @@
 
 An enterprise-grade, end-to-end Smart Retail platform integrating **Computer Vision (OpenCV + MobileNetV2 + Facial Recognition)**, **Natural Language Processing (TF-IDF + Logistic Regression Sentiment Analysis)**, **Hybrid FAQ Support Chatbot**, **FastAPI REST API Gateway**, **SQLite/PostgreSQL ORM**, and a modern **React + Vite + TailwindCSS Dashboard**.
 
+## 🚀 Live Demo
+
+- **Frontend:** https://ai-smart-retail-customer-intelligence.vercel.app/
+- **Backend API:** https://ai-smart-retail-customer-intelligence.onrender.com
+- **Swagger Documentation:** https://ai-smart-retail-customer-intelligence.onrender.com/docs
+
 ---
 
 ## 🏗️ System Architecture
@@ -32,61 +38,86 @@ graph TD
 
 ---
 
+## 🛠 Tech Stack
+
+![Python](https://img.shields.io/badge/Python-3.11-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.100-green)
+![React](https://img.shields.io/badge/React-18-blue)
+![Vite](https://img.shields.io/badge/Vite-5-purple)
+![Docker](https://img.shields.io/badge/Docker-Containerized-blue)
+![GitHub Actions](https://img.shields.io/badge/CI/CD-GitHub_Actions-success)
+![Render](https://img.shields.io/badge/Backend-Render-success)
+![Vercel](https://img.shields.io/badge/Frontend-Vercel-black)
+
+---
+
+## ☁️ Deployment
+
+Backend: Render
+
+Frontend: Vercel
+
+CI/CD: GitHub Actions
+
+Containerization: Docker
+
+---
+
 ## 📁 1. Complete Repository Folder Tree
 
 ```
-smart-retail-ai/
+AI-Smart-Retail-Customer-Intelligence-Platform/
 ├── app/
-│   ├── main.py                    # FastAPI application entrypoint, CORS, API Key middleware
-│   ├── config.py                  # Pydantic Settings configuration & paths
-│   ├── database.py                # SQLAlchemy ORM models (Customer, Visit, Review, ChatLog, Prediction)
-│   ├── pipeline.py                # Thread-safe Singleton Model Loader (loads models once at startup)
+│   ├── main.py                    
+│   ├── config.py                  
+│   ├── database.py                
+│   ├── pipeline.py                
 │   ├── models/
-│   │   ├── schemas.py             # Pydantic request/response validation schemas
-│   │   ├── product_classifier.pkl # Trained product category classifier model
-│   │   ├── face_db.pkl            # Registered customer face encodings database
-│   │   ├── sentiment_model.pkl    # Trained sentiment analysis model
+│   │   ├── schemas.py             
+│   │   ├── product_classifier.pkl 
+│   │   ├── face_db.pkl            
+│   │   ├── sentiment_model.pkl    
 │   │   ├── sentiment_vectorizer.pkl
-│   │   ├── chatbot_model.pkl      # Trained intent classifier model
+│   │   ├── chatbot_model.pkl      
 │   │   └── chatbot_vectorizer.pkl
 │   ├── services/
-│   │   ├── cv_service.py          # OpenCV preprocessing, Haar face detection, encodings, MobileNetV2 features
-│   │   ├── nlp_service.py         # Text preprocessing (lowercasing, stopwords, lemmatization, TF-IDF)
-│   │   └── chatbot_service.py     # Hybrid FAQ rule engine + ML intent classification
+│   │   ├── cv_service.py          
+│   │   ├── nlp_service.py         
+│   │   └── chatbot_service.py     
 │   └── routers/
-│       ├── vision.py              # POST /recognize-face, POST /classify-product
-│       ├── nlp.py                 # POST /analyze-sentiment
-│       ├── chatbot.py             # POST /chatbot
-│       └── dashboard.py           # GET /dashboard/stats, /visits, /reviews, /logs
+│       ├── vision.py              
+│       ├── nlp.py                 
+│       ├── chatbot.py             
+│       └── dashboard.py           
 ├── data/
-│   ├── intents.json               # FAQ & Chatbot intent pattern dataset
-│   ├── haarcascade_frontalface_default.xml # OpenCV Haar Cascade face XML
-│   └── nltk_data/                 # Downloaded NLTK corpora
+│   ├── intents.json               
+│   ├── haarcascade_frontalface_default.xml 
+│   └── nltk_data/                 
 ├── scripts/
-│   ├── train_all_models.py        # Automated ML model training pipeline
-│   └── seed_database.py           # Database seeder for demo analytics
+│   ├── train_all_models.py        
+│   └── seed_database.py           
 ├── tests/
-│   ├── conftest.py                # Pytest fixtures and test database setup
-│   ├── test_cv_service.py         # Computer Vision unit tests
-│   ├── test_nlp_service.py        # NLP & text processing unit tests
-│   ├── test_chatbot_service.py    # Hybrid Chatbot unit tests
-│   └── test_api_endpoints.py      # End-to-end FastAPI integration tests
-├── frontend/                      # React 18 + Vite + TailwindCSS Dashboard
+│   ├── conftest.py                
+│   ├── test_cv_service.py         
+│   ├── test_nlp_service.py        
+│   ├── test_chatbot_service.py    
+│   └── test_api_endpoints.py      
+├── frontend/                      
 │   ├── src/
-│   │   ├── components/            # Sidebar, Header, StatCard
-│   │   ├── pages/                 # Dashboard, Face Recognition, Product Classifier, Sentiment, Chatbot, Stats
-│   │   ├── services/              # Axios API client with X-API-Key header
+│   │   ├── components/            
+│   │   ├── pages/                 
+│   │   ├── services/              
 │   │   ├── App.jsx
-│   │   ├── index.css              # Glassmorphism design system & Tailwind
+│   │   ├── index.css              
 │   │   └── main.jsx
 │   ├── index.html
 │   ├── package.json
 │   └── vite.config.js
-├── Dockerfile                     # Multi-stage production container setup
-├── docker-compose.yml             # Orchestrates API gateway and UI containers
-├── requirements.txt               # Pinned Python backend dependencies
-├── .env.example                   # Environment configuration template
-├── .github/workflows/deploy.yml   # CI/CD GitHub Actions pipeline
+├── Dockerfile                     
+├── docker-compose.yml             
+├── requirements.txt               
+├── .env.example                   
+├── .github/workflows/deploy.yml   
 └── README.md
 ```
 
@@ -103,7 +134,9 @@ smart-retail-ai/
 
 1. **Clone the repository and enter directory**:
    ```bash
-   cd smart-retail-ai
+   git clone https://github.com/priyanshuranjan02/AI-Smart-Retail-Customer-Intelligence-Platform.git
+
+   cd AI-Smart-Retail-Customer-Intelligence-Platform
    ```
 
 2. **Create Python Virtual Environment & Install Dependencies**:
@@ -202,3 +235,14 @@ Facial recognition in retail environments must strictly comply with regional dat
 - [x] **FastAPI REST API**: Pydantic schemas, `X-API-Key` authentication middleware, SQLite ORM database integration, Swagger documentation at `/docs`.
 - [x] **React + Vite Frontend**: Modern glassmorphism UI dashboard, Chart.js metrics, webcam capture, image classification filter preview, chatbot UI, filterable statistics table.
 - [x] **MLOps & CI/CD**: `requirements.txt`, `Dockerfile`, `docker-compose.yml`, GitHub Actions workflow `.github/workflows/deploy.yml`, 100% Pytest pass rate.
+
+
+## 👨‍💻 Author
+
+Priyanshu Ranjan
+
+B.Tech CSE (AI & ML)
+
+VIT Bhopal University
+
+GitHub: https://github.com/priyanshuranjan02
