@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Retail AI — Project Documentation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #060d1a;
+      --bg2: #0c1526;
+      --bg3: #111d35;
+      --card: rgba(255,255,255,0.035);
+      --card-border: rgba(255,255,255,0.07);
+      --card-hover: rgba(255,255,255,0.06);
+      --text: #e8edf5;
+      --text2: #8a9ab8;
+      --text3: #5a6a84;
+      --indigo: #6366f1;
+      --indigo2: #818cf8;
+      --violet: #8b5cf6;
+      --sky: #38bdf8;
+      --emerald: #34d399;
+      --rose: #f87171;
+      --amber: #fbbf24;
+      --purple: #a78bfa;
+      --grad1: linear-gradient(135deg, #6366f1, #8b5cf6);
+      --grad2: linear-gradient(135deg, #38bdf8, #6366f1);
+      --grad3: linear-gradient(135deg, #34d399, #38bdf8);
+      --grad4: linear-gradient(135deg, #f87171, #fb923c);
+      --sidebar-w: 280px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      display: flex;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ─── Sidebar ─── */
+    .sidebar {
+      width: var(--sidebar-w);
+      min-height: 100vh;
+      background: var(--bg2);
+      border-right: 1px solid var(--card-border);
+      position: fixed;
+      top: 0; left: 0;
+      overflow-y: auto;
+      z-index: 100;
+      padding: 0 0 40px 0;
+    }
+
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 28px 24px 20px;
+      border-bottom: 1px solid var(--card-border);
+      margin-bottom: 16px;
+    }
+
+    .logo-icon {
+      width: 40px; height: 40px;
+      background: var(--grad1);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+    }
+
+    .logo-text { font-size: 13px; font-weight: 700; color: var(--text); line-height: 1.3; }
+    .logo-sub { font-size: 10px; color: var(--text3); font-weight: 500; }
+
+    .nav-section-label {
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      padding: 12px 24px 6px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 24px;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--text2);
+      text-decoration: none;
+      border-left: 3px solid transparent;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .nav-item:hover {
+      color: var(--text);
+      background: var(--card);
+      border-left-color: var(--indigo);
+    }
+
+    .nav-item .nav-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ─── Main Content ─── */
+    .main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* ─── Hero ─── */
+    .hero {
+      position: relative;
+      padding: 80px 64px 60px;
+      overflow: hidden;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 800px 400px at 20% 50%, rgba(99,102,241,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 600px 300px at 80% 30%, rgba(139,92,246,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: rgba(99,102,241,0.12);
+      border: 1px solid rgba(99,102,241,0.25);
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--indigo2);
+      margin-bottom: 24px;
+      letter-spacing: 0.3px;
+    }
+
+    .hero-badge span { width: 6px; height: 6px; background: var(--indigo2); border-radius: 50%; animation: pulse 2s infinite; }
+
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
+
+    .hero h1 {
+      font-size: 52px;
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -2px;
+      background: linear-gradient(135deg, #fff 30%, #818cf8 60%, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 16px;
+    }
+
+    .hero-sub {
+      font-size: 16px;
+      color: var(--text2);
+      max-width: 600px;
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+
+    .tag {
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      border: 1px solid;
+      letter-spacing: 0.3px;
+    }
+
+    .tag-indigo { background: rgba(99,102,241,0.1); border-color: rgba(99,102,241,0.3); color: var(--indigo2); }
+    .tag-sky { background: rgba(56,189,248,0.1); border-color: rgba(56,189,248,0.3); color: var(--sky); }
+    .tag-emerald { background: rgba(52,211,153,0.1); border-color: rgba(52,211,153,0.3); color: var(--emerald); }
+    .tag-violet { background: rgba(167,139,250,0.1); border-color: rgba(167,139,250,0.3); color: var(--purple); }
+    .tag-amber { background: rgba(251,191,36,0.1); border-color: rgba(251,191,36,0.3); color: var(--amber); }
+    .tag-rose { background: rgba(248,113,113,0.1); border-color: rgba(248,113,113,0.3); color: var(--rose); }
+
+    /* ─── Content Area ─── */
+    .content { padding: 56px 64px; }
+
+    /* ─── Section ─── */
+    .section { margin-bottom: 72px; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .section-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .section-num {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text3);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .section h2 {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.5px;
+    }
+
+    /* ─── Feature Cards ─── */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .feature-card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      border-radius: 16px 16px 0 0;
+    }
+
+    .feature-card:hover {
+      background: var(--card-hover);
+      border-color: rgba(255,255,255,0.12);
+      transform: translateY(-2px);
+    }
+
+    .fc-icon { font-size: 28px; margin-bottom: 14px; display: block; }
+    .fc-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .fc-tech { font-size: 11px; font-weight: 600; margin-bottom: 10px; }
+    .fc-desc { font-size: 12px; color: var(--text2); line-height: 1.6; }
+
+    .fc1::before { background: var(--grad1); }
+    .fc2::before { background: var(--grad2); }
+    .fc3::before { background: linear-gradient(135deg,#34d399,#6366f1); }
+    .fc4::before { background: linear-gradient(135deg,#f87171,#a78bfa); }
+    .fc5::before { background: var(--grad3); }
+
+    /* ─── Architecture Box ─── */
+    .arch-box {
+      background: var(--bg2);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 32px;
+      overflow-x: auto;
+    }
+
+    .arch-layer {
+      border: 1px solid;
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 0;
+      position: relative;
+    }
+
+    .arch-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 10px;
+    }
+
+    .arch-content { font-size: 13px; font-weight: 500; color: var(--text2); }
+
+    .arch-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 0;
+      color: var(--text3);
+      font-size: 20px;
+    }
+
+    .arch-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+
+    .arch-chip {
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--text2);
+    }
+
+    /* ─── Tech Stack Grid ─── */
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 12px;
+    }
+
+    .stack-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 18px;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      transition: background 0.2s;
+    }
+
+    .stack-item:hover { background: var(--card-hover); }
+
+    .stack-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .stack-name { font-size: 13px; font-weight: 700; color: var(--text); }
+    .stack-role { font-size: 11px; color: var(--text3); }
+
+    /* ─── Database Section ─── */
+    .db-highlight {
+      background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(139,92,246,0.05));
+      border: 1px solid rgba(99,102,241,0.2);
+      border-radius: 14px;
+      padding: 20px 24px;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .db-highlight-icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+
+    .db-path {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--indigo2);
+      background: rgba(99,102,241,0.1);
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 1px solid rgba(99,102,241,0.2);
+      display: inline-block;
+      margin-top: 8px;
+    }
+
+    .tables-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 16px;
+    }
+
+    .table-card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .table-card-header {
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .table-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: rgba(99,102,241,0.15);
+      color: var(--indigo2);
+      border: 1px solid rgba(99,102,241,0.2);
+      letter-spacing: 0.5px;
+    }
+
+    .table-name { font-size: 14px; font-weight: 700; color: var(--text); font-family: 'JetBrains Mono', monospace; }
+
+    .table-rows { padding: 12px 20px 16px; }
+
+    .table-row {
+      display: grid;
+      grid-template-columns: 130px 80px 1fr;
+      gap: 8px;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 12px;
+      align-items: center;
+    }
+
+    .table-row:last-child { border-bottom: none; }
+    .table-row.header { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; padding-bottom: 8px; }
+
+    .col-name { font-family: 'JetBrains Mono', monospace; color: var(--sky); font-weight: 500; font-size: 11.5px; }
+    .col-type {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(52,211,153,0.08);
+      color: var(--emerald);
+      border: 1px solid rgba(52,211,153,0.15);
+      text-align: center;
+    }
+    .col-desc { color: var(--text2); }
+
+    /* ─── Endpoints ─── */
+    .endpoint-group { margin-bottom: 28px; }
+    .endpoint-group-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    .endpoint {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 18px;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      margin-bottom: 8px;
+      transition: background 0.2s;
+    }
+
+    .endpoint:hover { background: var(--card-hover); }
+
+    .method {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 5px;
+      min-width: 44px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .method-get { background: rgba(52,211,153,0.12); color: var(--emerald); border: 1px solid rgba(52,211,153,0.25); }
+    .method-post { background: rgba(99,102,241,0.12); color: var(--indigo2); border: 1px solid rgba(99,102,241,0.25); }
+
+    .endpoint-path { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text); font-weight: 500; }
+    .endpoint-desc { font-size: 11.5px; color: var(--text2); margin-top: 2px; }
+
+    /* ─── ML Models ─── */
+    .model-card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 16px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: start;
+      transition: background 0.2s;
+    }
+
+    .model-card:hover { background: var(--card-hover); }
+
+    .model-num {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .model-title { font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+    .model-algo { font-size: 12px; color: var(--indigo2); font-weight: 600; margin-bottom: 12px; font-family: 'JetBrains Mono', monospace; }
+
+    .model-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+
+    .meta-pill {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--text2);
+    }
+
+    .meta-pill strong { color: var(--text); }
+
+    .model-file {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--amber);
+      background: rgba(251,191,36,0.07);
+      padding: 3px 8px;
+      border-radius: 5px;
+      border: 1px solid rgba(251,191,36,0.15);
+    }
+
+    /* ─── Flow Diagrams ─── */
+    .flow-card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+
+    .flow-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+
+    .flow-steps { display: flex; flex-direction: column; gap: 0; }
+
+    .flow-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 10px 0;
+      position: relative;
+    }
+
+    .flow-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 14px;
+      top: 36px;
+      width: 2px;
+      height: calc(100% - 14px);
+      background: var(--card-border);
+    }
+
+    .flow-circle {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      flex-shrink: 0;
+      z-index: 1;
+    }
+
+    .flow-text { font-size: 12.5px; color: var(--text2); padding-top: 4px; }
+    .flow-text strong { color: var(--text); }
+
+    /* ─── File Tree ─── */
+    .file-tree {
+      background: var(--bg2);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 24px 28px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      line-height: 1.9;
+      overflow-x: auto;
+    }
+
+    .ft-dir { color: var(--sky); font-weight: 600; }
+    .ft-file { color: var(--text2); }
+    .ft-important { color: var(--emerald); font-weight: 600; }
+    .ft-db { color: var(--amber); font-weight: 700; }
+    .ft-comment { color: var(--text3); font-style: italic; }
+
+    /* ─── Run Commands ─── */
+    .cmd-block {
+      background: var(--bg2);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .cmd-header {
+      padding: 10px 18px;
+      background: rgba(255,255,255,0.025);
+      border-bottom: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text3);
+    }
+
+    .cmd-header span { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-r { background: #f87171; }
+    .dot-y { background: #fbbf24; }
+    .dot-g { background: #34d399; }
+
+    .cmd-body {
+      padding: 18px 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      color: var(--text);
+      line-height: 2;
+    }
+
+    .cmd-comment { color: var(--text3); }
+    .cmd-cmd { color: var(--emerald); }
+
+    /* ─── Access Table ─── */
+    .access-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .access-table th {
+      text-align: left;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid var(--card-border);
+      color: var(--text3);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
+
+    .access-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      color: var(--text2);
+    }
+
+    .access-table tr:last-child td { border-bottom: none; }
+    .access-table tr:hover td { background: var(--card); }
+
+    .access-table td:first-child { font-weight: 600; color: var(--text); }
+    .access-table td:last-child { font-family: 'JetBrains Mono', monospace; color: var(--indigo2); font-size: 12px; }
+
+    /* ─── Footer ─── */
+    .footer {
+      margin-top: 60px;
+      padding: 32px 64px;
+      border-top: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--text3);
+    }
+
+    .footer strong { color: var(--text2); }
+
+    /* ─── Utilities ─── */
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      background: rgba(99,102,241,0.1);
+      color: var(--indigo2);
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid rgba(99,102,241,0.15);
+    }
+
+    p { color: var(--text2); font-size: 14px; line-height: 1.75; margin-bottom: 12px; }
+
+    /* ─── Scrollbar ─── */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: rgba(99,102,241,0.4); border-radius: 999px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(99,102,241,0.7); }
+
+    @media (max-width: 900px) {
+      .sidebar { display: none; }
+      .main { margin-left: 0; }
+      .hero, .content, .footer { padding-left: 24px; padding-right: 24px; }
+      .hero h1 { font-size: 36px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════ SIDEBAR ═══════════════════════════ -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon">🛒</div>
+    <div>
+      <div class="logo-text">Smart Retail AI</div>
+      <div class="logo-sub">v1.0 Documentation</div>
+    </div>
+  </div>
+
+  <div class="nav-section-label">Overview</div>
+  <a class="nav-item" href="#overview"><span class="nav-dot" style="background:#818cf8"></span>Project Overview</a>
+  <a class="nav-item" href="#architecture"><span class="nav-dot" style="background:#38bdf8"></span>System Architecture</a>
+  <a class="nav-item" href="#stack"><span class="nav-dot" style="background:#34d399"></span>Technology Stack</a>
+
+  <div class="nav-section-label">Data Layer</div>
+  <a class="nav-item" href="#database"><span class="nav-dot" style="background:#fbbf24"></span>Database & Storage</a>
+  <a class="nav-item" href="#tables"><span class="nav-dot" style="background:#fb923c"></span>DB Tables Schema</a>
+
+  <div class="nav-section-label">Backend</div>
+  <a class="nav-item" href="#backend"><span class="nav-dot" style="background:#a78bfa"></span>FastAPI Server</a>
+  <a class="nav-item" href="#endpoints"><span class="nav-dot" style="background:#f472b6"></span>API Endpoints</a>
+
+  <div class="nav-section-label">AI / ML</div>
+  <a class="nav-item" href="#models"><span class="nav-dot" style="background:#6366f1"></span>ML Models</a>
+  <a class="nav-item" href="#flows"><span class="nav-dot" style="background:#38bdf8"></span>Data Flows</a>
+
+  <div class="nav-section-label">Frontend</div>
+  <a class="nav-item" href="#frontend"><span class="nav-dot" style="background:#34d399"></span>React Application</a>
+  <a class="nav-item" href="#structure"><span class="nav-dot" style="background:#f87171"></span>File Structure</a>
+  <a class="nav-item" href="#run"><span class="nav-dot" style="background:#34d399"></span>How to Run</a>
+</nav>
+
+<!-- ═══════════════════════════ MAIN ═══════════════════════════ -->
+<div class="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge"><span></span>AI-Powered Retail Intelligence Platform</div>
+    <h1>Smart Retail AI</h1>
+    <p class="hero-sub">A full-stack application integrating Computer Vision, NLP, and Machine Learning models for intelligent real-world retail operations — face recognition, product classification, sentiment analysis, and a hybrid chatbot.</p>
+    <div class="hero-tags">
+      <span class="tag tag-indigo">FastAPI</span>
+      <span class="tag tag-sky">React + Vite</span>
+      <span class="tag tag-emerald">SQLite</span>
+      <span class="tag tag-violet">OpenCV</span>
+      <span class="tag tag-amber">NLTK</span>
+      <span class="tag tag-rose">Scikit-learn</span>
+      <span class="tag tag-indigo">Tailwind CSS</span>
+      <span class="tag tag-sky">Chart.js</span>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- ─── 1. OVERVIEW ─── -->
+    <div class="section" id="overview">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(99,102,241,0.12);">🎯</div>
+        <div>
+          <div class="section-num">Section 01</div>
+          <h2>Project Overview</h2>
+        </div>
+      </div>
+
+      <p>Smart Retail AI is a <strong style="color:var(--text)">full-stack intelligent retail platform</strong> that demonstrates real-world applications of AI/ML in the retail domain. It provides four core AI services — all predictions are logged, audited, and visualized in a live analytics dashboard with dark/light theme support.</p>
+
+      <div class="feature-grid" style="margin-top:24px;">
+        <div class="feature-card fc1">
+          <span class="fc-icon">👤</span>
+          <div class="fc-title">Customer Face Recognition</div>
+          <div class="fc-tech tag tag-indigo" style="display:inline-flex">OpenCV + Cosine Similarity</div>
+          <div class="fc-desc">Identifies returning VIP loyalty customers from uploaded photos or live webcam snapshots. Logs every visit with timestamp and confidence score.</div>
+        </div>
+        <div class="feature-card fc2">
+          <span class="fc-icon">📦</span>
+          <div class="fc-title">Product Classification</div>
+          <div class="fc-tech tag tag-sky" style="display:inline-flex">HSV Features + SVM/RF</div>
+          <div class="fc-desc">Classifies retail product images into 5 categories: Shoes, Clothes, Electronics, Groceries, Bags. Displays OpenCV preprocessing metadata.</div>
+        </div>
+        <div class="feature-card fc3">
+          <span class="fc-icon">💬</span>
+          <div class="fc-title">Sentiment Analysis</div>
+          <div class="fc-tech tag tag-emerald" style="display:inline-flex">TF-IDF + Logistic Regression</div>
+          <div class="fc-desc">Classifies customer reviews as Positive, Negative, or Neutral. Shows cleaned & lemmatized tokens with full NLP preprocessing pipeline.</div>
+        </div>
+        <div class="feature-card fc4">
+          <span class="fc-icon">🤖</span>
+          <div class="fc-title">Hybrid FAQ Chatbot</div>
+          <div class="fc-tech tag tag-violet" style="display:inline-flex">Rule Engine + ML Classifier</div>
+          <div class="fc-desc">Three-tier chatbot: exact rule matching → ML intent classification → fallback. Handles store hours, returns, shipping, loyalty rewards, and more.</div>
+        </div>
+        <div class="feature-card fc5">
+          <span class="fc-icon">📊</span>
+          <div class="fc-title">Analytics Dashboard</div>
+          <div class="fc-tech tag tag-amber" style="display:inline-flex">Chart.js + SQLite Audit Logs</div>
+          <div class="fc-desc">Live dashboard with 4 Chart.js visualizations: daily activity, sentiment distribution, product distribution, and recent face recognition visits.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── 2. ARCHITECTURE ─── -->
+    <div class="section" id="architecture">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(56,189,248,0.12);">🏗️</div>
+        <div>
+          <div class="section-num">Section 02</div>
+          <h2>System Architecture</h2>
+        </div>
+      </div>
+
+      <div class="arch-box">
+        <!-- Layer 1: Browser -->
+        <div class="arch-layer" style="border-color:rgba(129,140,248,0.3);background:rgba(99,102,241,0.06);">
+          <div class="arch-label" style="color:var(--indigo2)">🌐 Browser — Port 3000</div>
+          <div class="arch-content">React + Vite Frontend (Single Page Application)</div>
+          <div class="arch-chips">
+            <span class="arch-chip">Dashboard</span>
+            <span class="arch-chip">Face Recognition</span>
+            <span class="arch-chip">Product Classifier</span>
+            <span class="arch-chip">Sentiment Analysis</span>
+            <span class="arch-chip">FAQ Chatbot</span>
+            <span class="arch-chip">Analytics & Logs</span>
+          </div>
+        </div>
+
+        <div class="arch-arrow">↓ <span style="font-size:11px;color:var(--text3);margin-left:8px;">HTTP REST · X-API-Key Header · multipart/form-data + JSON</span></div>
+
+        <!-- Layer 2: Backend -->
+        <div class="arch-layer" style="border-color:rgba(167,139,250,0.3);background:rgba(139,92,246,0.06);">
+          <div class="arch-label" style="color:var(--purple)">⚙️ Backend — Port 8000 (FastAPI + Uvicorn)</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-top:10px;">
+            <div style="padding:12px;background:rgba(255,255,255,0.04);border:1px solid var(--card-border);border-radius:8px;font-size:12px;">
+              <div style="color:var(--indigo2);font-weight:700;margin-bottom:4px;font-family:'JetBrains Mono',monospace;">vision.py</div>
+              <div style="color:var(--text3);">/vision/*</div>
+            </div>
+            <div style="padding:12px;background:rgba(255,255,255,0.04);border:1px solid var(--card-border);border-radius:8px;font-size:12px;">
+              <div style="color:var(--sky);font-weight:700;margin-bottom:4px;font-family:'JetBrains Mono',monospace;">nlp.py</div>
+              <div style="color:var(--text3);">/nlp/*</div>
+            </div>
+            <div style="padding:12px;background:rgba(255,255,255,0.04);border:1px solid var(--card-border);border-radius:8px;font-size:12px;">
+              <div style="color:var(--emerald);font-weight:700;margin-bottom:4px;font-family:'JetBrains Mono',monospace;">chatbot.py</div>
+              <div style="color:var(--text3);">/chatbot/*</div>
+            </div>
+            <div style="padding:12px;background:rgba(255,255,255,0.04);border:1px solid var(--card-border);border-radius:8px;font-size:12px;">
+              <div style="color:var(--amber);font-weight:700;margin-bottom:4px;font-family:'JetBrains Mono',monospace;">dashboard.py</div>
+              <div style="color:var(--text3);">/dashboard/*</div>
+            </div>
+          </div>
+          <div style="margin-top:14px;padding:12px 16px;background:rgba(255,255,255,0.03);border-radius:8px;font-size:12px;color:var(--text2);">
+            <strong style="color:var(--text)">Services Layer:</strong> cv_service.py &nbsp;|&nbsp; nlp_service.py &nbsp;|&nbsp; chatbot_service.py
+          </div>
+          <div style="margin-top:8px;padding:10px 16px;background:rgba(251,191,36,0.05);border:1px solid rgba(251,191,36,0.15);border-radius:8px;font-size:12px;color:var(--amber);">
+            <strong>ML Pipeline Singleton:</strong> Loads all .pkl model files once at startup
+          </div>
+        </div>
+
+        <div class="arch-arrow">↓ <span style="font-size:11px;color:var(--text3);margin-left:8px;">SQLAlchemy ORM</span></div>
+
+        <!-- Layer 3: Database -->
+        <div class="arch-layer" style="border-color:rgba(52,211,153,0.3);background:rgba(52,211,153,0.05);">
+          <div class="arch-label" style="color:var(--emerald)">🗄️ Database — SQLite (smart_retail.db)</div>
+          <div class="arch-chips" style="margin-top:8px;">
+            <span class="arch-chip" style="color:var(--emerald);border-color:rgba(52,211,153,0.2)">customers</span>
+            <span class="arch-chip" style="color:var(--emerald);border-color:rgba(52,211,153,0.2)">customer_visits</span>
+            <span class="arch-chip" style="color:var(--emerald);border-color:rgba(52,211,153,0.2)">reviews</span>
+            <span class="arch-chip" style="color:var(--emerald);border-color:rgba(52,211,153,0.2)">chat_logs</span>
+            <span class="arch-chip" style="color:var(--emerald);border-color:rgba(52,211,153,0.2)">predictions</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── 3. TECH STACK ─── -->
+    <div class="section" id="stack">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(52,211,153,0.12);">⚡</div>
+        <div>
+          <div class="section-num">Section 03</div>
+          <h2>Technology Stack</h2>
+        </div>
+      </div>
+
+      <div style="margin-bottom:20px;font-size:13px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;">Backend</div>
+      <div class="stack-grid" style="margin-bottom:28px;">
+        <div class="stack-item"><div class="stack-icon" style="background:rgba(99,102,241,0.12);">⚡</div><div><div class="stack-name">FastAPI</div><div class="stack-role">Web framework & API gateway</div></div></div>
+        <div class="stack-item"><div class="stack-icon" style="background:rgba(52,211,153,0.12);">🔄</div><div><div class="stack-name">Uvicorn</div><div class="stack-role">ASGI production server</div></div></div>
+        <div class="stack-item"><div class="stack-icon" style="background:rgba(251,191,36,0.12);">🗄️</div><div><div class="stack-name">SQLAlchemy</div><div class="stack-role">ORM & database session</div></div></div>
+        <div class="stack-item"><div class="stack-icon" style="background:rgba(167,139,250,0.12);">✅</div><div><div class="stack-name">Pydantic v2</div><div class="stack-role">Request/response validation</div></div></div>
+        <div class="stack-item"><div class="stack-icon" style="background:rgba(56,189,248,0.12);">👁️</div><div><div class="stack-name">OpenCV (cv2)</div><div class="stack-role">Image processing & face detection</div></div></div>
+        <div class="stack-item"><div class="stack-icon" style="background:rgba(248,113,113,0.12);">🖼️</div><div><div class="stack-name">Pillow (PIL)</div><div class="stack-role">Image I/O & format conversion</div></div></div>
+        <div class="stack-item"><div class="stack-icon" style="background:rgba(52,211,153,0.12);">📝</div><div><div class="stack-name">NLTK</div><div class="stack-role">NLP: tokenization, stopwords, lemmatization</div></div></div>
+        <div class="stack-item"><div class="stack-icon" style="background:rgba(99,102,241,0.12);">🧠</div><div><div class="stack-name">Scikit-learn</div><div class="stack-role">ML models: LogReg, SVM, RandomForest</div></div></div>
+        <div class="stack-item"><div class="stack-icon" style="background:rgba(251,191,36,0.12);">🔢</div><div><div class="stack-name">NumPy</div><div class="stack-role">Numerical operations & arrays</div></div></div>
+        <div class="stack-item"><div class="stack-icon" style="background:rgba(167,139,250,0.12);">💾</div><div><div class="stack-name">Pickle</div><div class="stack-role">ML model artifact serialization</div></div></div>
+      </div>
+
+      <div style="margin-bottom:20px;font-size:13px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;">Frontend</div>
+      <div class="stack-grid" style="margin-bottom:28px;">
+        <div class="stack-item"><div class="stack-icon" style="background:rgba(56,189,248,0.12);">⚛️</div><div><div class="stack-name">React 18</div><div class="stack-role">SPA framework & component tree</div></div></div>
+        <div class="stack-item"><div class="stack-icon" style="background:rgba(167,139,250,0.12);">⚡</div><div><div class="stack-name">Vite</div><div class="stack-role">Lightning-fast build tooling</div></div></div>
+        <div class="stack-item"><div class="stack-icon" style="background:rgba(99,102,241,0.12);">🎨</div><div><div class="stack-name">Tailwind CSS v4</div><div class="stack-role">Utility-first styling + CSS variables</div></div></div>
+        <div class="stack-item"><div class="stack-icon" style="background:rgba(248,113,113,0.12);">📈</div><div><div class="stack-name">Chart.js</div><div class="stack-role">Dashboard charts & data visualizations</div></div></div>
+        <div class="stack-item"><div class="stack-icon" style="background:rgba(52,211,153,0.12);">🌐</div><div><div class="stack-name">Axios</div><div class="stack-role">HTTP client with API key injection</div></div></div>
+        <div class="stack-item"><div class="stack-icon" style="background:rgba(251,191,36,0.12);">🔗</div><div><div class="stack-name">React Router DOM</div><div class="stack-role">Client-side page routing</div></div></div>
+      </div>
+
+      <div style="margin-bottom:20px;font-size:13px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;">Database</div>
+      <div class="stack-grid">
+        <div class="stack-item"><div class="stack-icon" style="background:rgba(52,211,153,0.12);">🗃️</div><div><div class="stack-name">SQLite</div><div class="stack-role">File-based relational database</div></div></div>
+        <div class="stack-item"><div class="stack-icon" style="background:rgba(251,191,36,0.12);">📂</div><div><div class="stack-name">smart_retail.db</div><div class="stack-role">Single database file on disk</div></div></div>
+      </div>
+    </div>
+
+    <!-- ─── 4. DATABASE ─── -->
+    <div class="section" id="database">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(251,191,36,0.12);">🗄️</div>
+        <div>
+          <div class="section-num">Section 04</div>
+          <h2>Database & Storage</h2>
+        </div>
+      </div>
+
+      <div class="db-highlight">
+        <div class="db-highlight-icon">💡</div>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px;">All runtime data lives in a single SQLite file</div>
+          <p style="margin:0;font-size:13px;">No external database server needed. SQLAlchemy auto-creates it with all 5 tables on first startup via <code>init_db()</code>. The database URL is configured in <code>app/config.py</code>.</p>
+          <code class="db-path">smart-retail-ai/smart_retail.db</code>
+        </div>
+      </div>
+
+      <p style="margin-bottom:20px;">The face recognition module also stores customer face encodings in a separate Pickle file. <strong style="color:var(--text)">No actual photos are ever stored</strong> — only the 384-dimensional mathematical feature vectors.</p>
+
+      <div style="background:rgba(251,191,36,0.06);border:1px solid rgba(251,191,36,0.2);border-radius:12px;padding:16px 20px;margin-bottom:28px;font-size:13px;">
+        <strong style="color:var(--amber)">📁 Face Encodings File:</strong> <code>app/models/face_db.pkl</code>
+        — Grows as new VIP customers are registered. Holds a Python dict of <code>{ customer_code → { encoding: [384-dim vector], name: "..." } }</code>
+      </div>
+    </div>
+
+    <!-- ─── 5. DB TABLES ─── -->
+    <div class="section" id="tables">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(251,146,60,0.12);">📋</div>
+        <div>
+          <div class="section-num">Section 05</div>
+          <h2>Database Tables Schema</h2>
+        </div>
+      </div>
+
+      <div class="tables-grid">
+        <!-- customers -->
+        <div class="table-card">
+          <div class="table-card-header">
+            <span class="table-badge">TABLE</span>
+            <span class="table-name">customers</span>
+          </div>
+          <div class="table-rows">
+            <div class="table-row header"><div>Column</div><div>Type</div><div>Notes</div></div>
+            <div class="table-row"><div class="col-name">id</div><div class="col-type">INT PK</div><div class="col-desc">Auto-increment primary key</div></div>
+            <div class="table-row"><div class="col-name">customer_code</div><div class="col-type">VARCHAR</div><div class="col-desc">Unique ID e.g. CUST-1001</div></div>
+            <div class="table-row"><div class="col-name">name</div><div class="col-type">VARCHAR</div><div class="col-desc">Customer full name</div></div>
+            <div class="table-row"><div class="col-name">created_at</div><div class="col-type">DATETIME</div><div class="col-desc">Auto-set on insert</div></div>
+          </div>
+        </div>
+
+        <!-- customer_visits -->
+        <div class="table-card">
+          <div class="table-card-header">
+            <span class="table-badge">TABLE</span>
+            <span class="table-name">customer_visits</span>
+          </div>
+          <div class="table-rows">
+            <div class="table-row header"><div>Column</div><div>Type</div><div>Notes</div></div>
+            <div class="table-row"><div class="col-name">id</div><div class="col-type">INT PK</div><div class="col-desc">Auto-increment</div></div>
+            <div class="table-row"><div class="col-name">customer_id</div><div class="col-type">INT FK</div><div class="col-desc">→ customers.id (nullable)</div></div>
+            <div class="table-row"><div class="col-name">customer_code</div><div class="col-type">VARCHAR</div><div class="col-desc">CUST-XXXX or UNKNOWN</div></div>
+            <div class="table-row"><div class="col-name">visit_time</div><div class="col-type">DATETIME</div><div class="col-desc">Exact scan timestamp</div></div>
+            <div class="table-row"><div class="col-name">confidence</div><div class="col-type">FLOAT</div><div class="col-desc">Cosine similarity (0–1)</div></div>
+            <div class="table-row"><div class="col-name">status</div><div class="col-type">VARCHAR</div><div class="col-desc">"Known" or "Unknown"</div></div>
+          </div>
+        </div>
+
+        <!-- reviews -->
+        <div class="table-card">
+          <div class="table-card-header">
+            <span class="table-badge">TABLE</span>
+            <span class="table-name">reviews</span>
+          </div>
+          <div class="table-rows">
+            <div class="table-row header"><div>Column</div><div>Type</div><div>Notes</div></div>
+            <div class="table-row"><div class="col-name">id</div><div class="col-type">INT PK</div><div class="col-desc">Auto-increment</div></div>
+            <div class="table-row"><div class="col-name">text</div><div class="col-type">TEXT</div><div class="col-desc">Full review content</div></div>
+            <div class="table-row"><div class="col-name">sentiment</div><div class="col-type">VARCHAR</div><div class="col-desc">Positive / Negative / Neutral</div></div>
+            <div class="table-row"><div class="col-name">confidence</div><div class="col-type">FLOAT</div><div class="col-desc">Model confidence (0–1)</div></div>
+            <div class="table-row"><div class="col-name">created_at</div><div class="col-type">DATETIME</div><div class="col-desc">Submission timestamp</div></div>
+          </div>
+        </div>
+
+        <!-- chat_logs -->
+        <div class="table-card">
+          <div class="table-card-header">
+            <span class="table-badge">TABLE</span>
+            <span class="table-name">chat_logs</span>
+          </div>
+          <div class="table-rows">
+            <div class="table-row header"><div>Column</div><div>Type</div><div>Notes</div></div>
+            <div class="table-row"><div class="col-name">id</div><div class="col-type">INT PK</div><div class="col-desc">Auto-increment</div></div>
+            <div class="table-row"><div class="col-name">user_message</div><div class="col-type">TEXT</div><div class="col-desc">Message sent by user</div></div>
+            <div class="table-row"><div class="col-name">bot_response</div><div class="col-type">TEXT</div><div class="col-desc">Generated bot reply</div></div>
+            <div class="table-row"><div class="col-name">intent</div><div class="col-type">VARCHAR</div><div class="col-desc">e.g. return_policy</div></div>
+            <div class="table-row"><div class="col-name">confidence</div><div class="col-type">FLOAT</div><div class="col-desc">Classification confidence</div></div>
+            <div class="table-row"><div class="col-name">created_at</div><div class="col-type">DATETIME</div><div class="col-desc">Conversation timestamp</div></div>
+          </div>
+        </div>
+
+        <!-- predictions — wide -->
+        <div class="table-card" style="grid-column: 1 / -1;">
+          <div class="table-card-header">
+            <span class="table-badge" style="background:rgba(248,113,113,0.15);color:var(--rose);border-color:rgba(248,113,113,0.25);">MASTER LOG</span>
+            <span class="table-name">predictions</span>
+            <span style="font-size:11px;color:var(--text3);margin-left:8px;">— Every AI prediction from all 4 modules is written here</span>
+          </div>
+          <div class="table-rows">
+            <div class="table-row header"><div>Column</div><div>Type</div><div>Notes</div></div>
+            <div class="table-row"><div class="col-name">id</div><div class="col-type">INT PK</div><div class="col-desc">Auto-increment primary key</div></div>
+            <div class="table-row"><div class="col-name">prediction_type</div><div class="col-type">VARCHAR</div><div class="col-desc">face_recognition | product_classification | sentiment_analysis | chatbot_intent</div></div>
+            <div class="table-row"><div class="col-name">category</div><div class="col-type">VARCHAR</div><div class="col-desc">Result label — e.g. "Shoes", "Positive", customer name, intent tag</div></div>
+            <div class="table-row"><div class="col-name">confidence</div><div class="col-type">FLOAT</div><div class="col-desc">Model confidence score (0.0 – 1.0)</div></div>
+            <div class="table-row"><div class="col-name">created_at</div><div class="col-type">DATETIME</div><div class="col-desc">Prediction timestamp (auto-set)</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── 6. BACKEND ─── -->
+    <div class="section" id="backend">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(167,139,250,0.12);">⚙️</div>
+        <div>
+          <div class="section-num">Section 06</div>
+          <h2>FastAPI Backend Server</h2>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;">
+        <div style="background:var(--card);border:1px solid var(--card-border);border-radius:14px;padding:20px;">
+          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:8px;">📄 <code>app/main.py</code> — Entry Point</div>
+          <ul style="font-size:12.5px;color:var(--text2);line-height:2;padding-left:16px;">
+            <li>FastAPI app + Swagger UI at <code>/docs</code></li>
+            <li>CORS middleware (all origins in dev)</li>
+            <li>X-API-Key security on all routes</li>
+            <li>Startup: <code>init_db()</code> + <code>pipeline.initialize()</code></li>
+          </ul>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--card-border);border-radius:14px;padding:20px;">
+          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:8px;">⚙️ <code>app/config.py</code> — Settings</div>
+          <ul style="font-size:12.5px;color:var(--text2);line-height:2;padding-left:16px;">
+            <li>API Key: <code>smart-retail-secret-key-2026</code></li>
+            <li>DB URL: <code>sqlite:///./smart_retail.db</code></li>
+            <li>Face Threshold: <code>0.6</code> cosine similarity</li>
+            <li>Image Target: <code>(224, 224)</code> pixels</li>
+          </ul>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--card-border);border-radius:14px;padding:20px;">
+          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:8px;">🧠 <code>app/pipeline.py</code> — ML Singleton</div>
+          <p style="font-size:12px;margin:0;">Loads all 4 trained model <code>.pkl</code> files once at startup into memory. Uses Python's Singleton pattern so models are never reloaded per request.</p>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--card-border);border-radius:14px;padding:20px;">
+          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:8px;">🗄️ <code>app/database.py</code> — ORM</div>
+          <p style="font-size:12px;margin:0;">SQLAlchemy declarative models for all 5 tables. <code>SessionLocal</code> factory with <code>check_same_thread: False</code> for SQLite multithread safety. <code>get_db()</code> dependency injection.</p>
+        </div>
+      </div>
+
+      <div style="background:var(--bg2);border:1px solid var(--card-border);border-radius:14px;padding:20px 24px;">
+        <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:16px;">🔧 Services Layer</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+          <div>
+            <div style="font-size:11px;font-weight:700;color:var(--sky);margin-bottom:8px;font-family:'JetBrains Mono',monospace;">cv_service.py</div>
+            <ul style="font-size:11.5px;color:var(--text2);line-height:2;padding-left:14px;">
+              <li>Image bytes → OpenCV BGR</li>
+              <li>Gaussian Blur (5×5 kernel)</li>
+              <li>Canny Edge Detection</li>
+              <li>HSV + Spatial feature extraction</li>
+              <li>Haar Cascade face detection</li>
+              <li>384-dim face encoding</li>
+              <li>Cosine similarity matching</li>
+            </ul>
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:700;color:var(--emerald);margin-bottom:8px;font-family:'JetBrains Mono',monospace;">nlp_service.py</div>
+            <ul style="font-size:11.5px;color:var(--text2);line-height:2;padding-left:14px;">
+              <li>Lowercase + URL/HTML strip</li>
+              <li>Punctuation & digit removal</li>
+              <li>NLTK word_tokenize</li>
+              <li>Stopword removal</li>
+              <li>WordNet lemmatization</li>
+              <li>TF-IDF vectorization</li>
+              <li>Lexicon fallback</li>
+            </ul>
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:700;color:var(--purple);margin-bottom:8px;font-family:'JetBrains Mono',monospace;">chatbot_service.py</div>
+            <ul style="font-size:11.5px;color:var(--text2);line-height:2;padding-left:14px;">
+              <li>Load intents.json rules</li>
+              <li>Tier 1: Rule/keyword match</li>
+              <li>Tier 2: ML intent classifier</li>
+              <li>Tier 3: Fallback response</li>
+              <li>Confidence threshold: 0.40</li>
+              <li>Random response from pool</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── 7. ENDPOINTS ─── -->
+    <div class="section" id="endpoints">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(244,114,182,0.12);">🔌</div>
+        <div>
+          <div class="section-num">Section 07</div>
+          <h2>API Endpoints Reference</h2>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap;">
+        <div style="background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);border-radius:10px;padding:12px 18px;font-size:13px;">
+          <span style="color:var(--text3);font-size:11px;">Base URL</span><br>
+          <span style="font-family:'JetBrains Mono',monospace;color:var(--indigo2);font-weight:600;">http://localhost:8000</span>
+        </div>
+        <div style="background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.2);border-radius:10px;padding:12px 18px;font-size:13px;">
+          <span style="color:var(--text3);font-size:11px;">Auth Header</span><br>
+          <span style="font-family:'JetBrains Mono',monospace;color:var(--amber);font-weight:600;">X-API-Key: smart-retail-secret-key-2026</span>
+        </div>
+      </div>
+
+      <div class="endpoint-group">
+        <div class="endpoint-group-title">Core</div>
+        <div class="endpoint"><span class="method method-get">GET</span><div><div class="endpoint-path">/health</div><div class="endpoint-desc">Server health & ML model load status</div></div></div>
+        <div class="endpoint"><span class="method method-get">GET</span><div><div class="endpoint-path">/docs</div><div class="endpoint-desc">Interactive Swagger UI for API testing</div></div></div>
+      </div>
+
+      <div class="endpoint-group">
+        <div class="endpoint-group-title">Vision — /vision</div>
+        <div class="endpoint"><span class="method method-post">POST</span><div><div class="endpoint-path">/vision/recognize-face</div><div class="endpoint-desc">Upload image → returns customer_id, name, confidence, bounding_box, known status</div></div></div>
+        <div class="endpoint"><span class="method method-post">POST</span><div><div class="endpoint-path">/vision/classify-product</div><div class="endpoint-desc">Upload product image → category, all_probabilities, preprocessing metadata</div></div></div>
+        <div class="endpoint"><span class="method method-post">POST</span><div><div class="endpoint-path">/vision/register-customer</div><div class="endpoint-desc">Register new VIP with customer_code, name, and face photo</div></div></div>
+        <div class="endpoint"><span class="method method-get">GET</span><div><div class="endpoint-path">/vision/visits?limit=N</div><div class="endpoint-desc">Recent face recognition visit logs from customer_visits table</div></div></div>
+      </div>
+
+      <div class="endpoint-group">
+        <div class="endpoint-group-title">NLP — /nlp</div>
+        <div class="endpoint"><span class="method method-post">POST</span><div><div class="endpoint-path">/nlp/analyze-sentiment</div><div class="endpoint-desc">Body: {"text": "..."} → sentiment, confidence, clean_tokens</div></div></div>
+        <div class="endpoint"><span class="method method-get">GET</span><div><div class="endpoint-path">/nlp/reviews?limit=N</div><div class="endpoint-desc">Recent sentiment-analyzed reviews from reviews table</div></div></div>
+      </div>
+
+      <div class="endpoint-group">
+        <div class="endpoint-group-title">Chatbot — /chatbot</div>
+        <div class="endpoint"><span class="method method-post">POST</span><div><div class="endpoint-path">/chatbot/message</div><div class="endpoint-desc">Body: {"message": "..."} → bot_response, intent, confidence</div></div></div>
+      </div>
+
+      <div class="endpoint-group">
+        <div class="endpoint-group-title">Dashboard — /dashboard</div>
+        <div class="endpoint"><span class="method method-get">GET</span><div><div class="endpoint-path">/dashboard/stats</div><div class="endpoint-desc">Aggregate counts: total predictions per AI module</div></div></div>
+        <div class="endpoint"><span class="method method-get">GET</span><div><div class="endpoint-path">/dashboard/logs</div><div class="endpoint-desc">Full predictions master audit log (paginated)</div></div></div>
+        <div class="endpoint"><span class="method method-get">GET</span><div><div class="endpoint-path">/dashboard/sentiment-distribution</div><div class="endpoint-desc">{Positive: N, Negative: N, Neutral: N} for pie chart</div></div></div>
+        <div class="endpoint"><span class="method method-get">GET</span><div><div class="endpoint-path">/dashboard/product-distribution</div><div class="endpoint-desc">{Shoes: N, Clothes: N, ...} for bar chart</div></div></div>
+        <div class="endpoint"><span class="method method-get">GET</span><div><div class="endpoint-path">/dashboard/daily-activity</div><div class="endpoint-desc">Last 7 days prediction volume per model type</div></div></div>
+      </div>
+    </div>
+
+    <!-- ─── 8. ML MODELS ─── -->
+    <div class="section" id="models">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(99,102,241,0.12);">🧠</div>
+        <div>
+          <div class="section-num">Section 08</div>
+          <h2>ML Models & AI Pipeline</h2>
+        </div>
+      </div>
+
+      <div class="model-card">
+        <div class="model-num" style="background:rgba(99,102,241,0.12);">👤</div>
+        <div>
+          <div class="model-title">Model 1 — Customer Face Recognition</div>
+          <div class="model-algo">Cosine Similarity · OpenCV Haar Cascade</div>
+          <div class="model-meta">
+            <span class="meta-pill"><strong>Features:</strong> 384-dim normalized vector</span>
+            <span class="meta-pill"><strong>Detection:</strong> Haar Cascade XML</span>
+            <span class="meta-pill"><strong>Threshold:</strong> 0.6 cosine similarity</span>
+            <span class="meta-pill"><strong>Encoding:</strong> 16×16 spatial + 4×4 LBP histograms</span>
+          </div>
+          <span class="model-file">app/models/face_db.pkl</span>
+        </div>
+      </div>
+
+      <div class="model-card">
+        <div class="model-num" style="background:rgba(56,189,248,0.12);">📦</div>
+        <div>
+          <div class="model-title">Model 2 — Product Image Classifier</div>
+          <div class="model-algo">Random Forest / SVM · Scikit-learn</div>
+          <div class="model-meta">
+            <span class="meta-pill"><strong>Features:</strong> 304-dim HSV histogram + spatial grid</span>
+            <span class="meta-pill"><strong>Classes:</strong> Shoes, Clothes, Electronics, Groceries, Bags</span>
+            <span class="meta-pill"><strong>Preprocessing:</strong> Gaussian Blur → Canny Edges → HSV histogram</span>
+            <span class="meta-pill"><strong>Fallback:</strong> Deterministic feature-sum modulo rule</span>
+          </div>
+          <span class="model-file">app/models/product_classifier.pkl</span>
+        </div>
+      </div>
+
+      <div class="model-card">
+        <div class="model-num" style="background:rgba(52,211,153,0.12);">💬</div>
+        <div>
+          <div class="model-title">Model 3 — Sentiment Analysis</div>
+          <div class="model-algo">Logistic Regression · TF-IDF Vectorizer · NLTK</div>
+          <div class="model-meta">
+            <span class="meta-pill"><strong>Classes:</strong> Positive, Negative, Neutral</span>
+            <span class="meta-pill"><strong>Preprocessing:</strong> lowercase → clean → tokenize → lemmatize</span>
+            <span class="meta-pill"><strong>Vectorizer:</strong> sklearn TfidfVectorizer</span>
+            <span class="meta-pill"><strong>Fallback:</strong> Seed word lexicon counter</span>
+          </div>
+          <span class="model-file">app/models/sentiment_model.pkl + sentiment_vectorizer.pkl</span>
+        </div>
+      </div>
+
+      <div class="model-card">
+        <div class="model-num" style="background:rgba(167,139,250,0.12);">🤖</div>
+        <div>
+          <div class="model-title">Model 4 — FAQ Chatbot Intent Classifier</div>
+          <div class="model-algo">Rule Engine → Logistic Regression → Fallback (3-tier hybrid)</div>
+          <div class="model-meta">
+            <span class="meta-pill"><strong>Intents:</strong> greeting, store_hours, return_policy, order_tracking, payment, shipping, discount, complaint, product_info, farewell</span>
+            <span class="meta-pill"><strong>Rule source:</strong> data/intents.json</span>
+            <span class="meta-pill"><strong>ML threshold:</strong> ≥ 0.40 confidence</span>
+          </div>
+          <span class="model-file">app/models/chatbot_model.pkl + chatbot_vectorizer.pkl</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── 9. DATA FLOWS ─── -->
+    <div class="section" id="flows">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(56,189,248,0.12);">🔄</div>
+        <div>
+          <div class="section-num">Section 09</div>
+          <h2>End-to-End Data Flows</h2>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div class="flow-card">
+          <div class="flow-title">👤 Face Recognition Flow</div>
+          <div class="flow-steps">
+            <div class="flow-step"><div class="flow-circle" style="background:rgba(99,102,241,0.2);color:var(--indigo2);">1</div><div class="flow-text"><strong>User uploads/captures photo</strong><br>FormData POST /vision/recognize-face</div></div>
+            <div class="flow-step"><div class="flow-circle" style="background:rgba(99,102,241,0.2);color:var(--indigo2);">2</div><div class="flow-text"><strong>Image → OpenCV BGR array</strong><br>PIL decode → cv2 color convert</div></div>
+            <div class="flow-step"><div class="flow-circle" style="background:rgba(99,102,241,0.2);color:var(--indigo2);">3</div><div class="flow-text"><strong>Haar Cascade face detection</strong><br>Returns bounding box (x, y, w, h)</div></div>
+            <div class="flow-step"><div class="flow-circle" style="background:rgba(99,102,241,0.2);color:var(--indigo2);">4</div><div class="flow-text"><strong>Compute 384-dim face encoding</strong><br>Spatial + LBP block histograms → normalize</div></div>
+            <div class="flow-step"><div class="flow-circle" style="background:rgba(99,102,241,0.2);color:var(--indigo2);">5</div><div class="flow-text"><strong>Cosine similarity vs face_db.pkl</strong><br>≥ 0.6 = Known customer, else Unknown</div></div>
+            <div class="flow-step"><div class="flow-circle" style="background:rgba(52,211,153,0.2);color:var(--emerald);">✓</div><div class="flow-text"><strong>Save to DB + return result</strong><br>→ customer_visits + predictions tables</div></div>
+          </div>
+        </div>
+
+        <div class="flow-card">
+          <div class="flow-title">📦 Product Classification Flow</div>
+          <div class="flow-steps">
+            <div class="flow-step"><div class="flow-circle" style="background:rgba(56,189,248,0.2);color:var(--sky);">1</div><div class="flow-text"><strong>User uploads product image</strong><br>FormData POST /vision/classify-product</div></div>
+            <div class="flow-step"><div class="flow-circle" style="background:rgba(56,189,248,0.2);color:var(--sky);">2</div><div class="flow-text"><strong>OpenCV preprocessing</strong><br>Resize 224×224 → Gaussian Blur → Canny edges</div></div>
+            <div class="flow-step"><div class="flow-circle" style="background:rgba(56,189,248,0.2);color:var(--sky);">3</div><div class="flow-text"><strong>Extract 304-dim feature vector</strong><br>HSV histograms (48) + spatial grid (256)</div></div>
+            <div class="flow-step"><div class="flow-circle" style="background:rgba(56,189,248,0.2);color:var(--sky);">4</div><div class="flow-text"><strong>ML classifier predict_proba()</strong><br>5 category probability scores</div></div>
+            <div class="flow-step"><div class="flow-circle" style="background:rgba(52,211,153,0.2);color:var(--emerald);">✓</div><div class="flow-text"><strong>Save to DB + return result</strong><br>→ predictions table + frontend probability bars</div></div>
+          </div>
+        </div>
+
+        <div class="flow-card">
+          <div class="flow-title">💬 Sentiment Analysis Flow</div>
+          <div class="flow-steps">
+            <div class="flow-step"><div class="flow-circle" style="background:rgba(52,211,153,0.2);color:var(--emerald);">1</div><div class="flow-text"><strong>User types review text</strong><br>POST /nlp/analyze-sentiment {"text":"..."}</div></div>
+            <div class="flow-step"><div class="flow-circle" style="background:rgba(52,211,153,0.2);color:var(--emerald);">2</div><div class="flow-text"><strong>NLTK preprocessing pipeline</strong><br>lowercase → clean → tokenize → lemmatize</div></div>
+            <div class="flow-step"><div class="flow-circle" style="background:rgba(52,211,153,0.2);color:var(--emerald);">3</div><div class="flow-text"><strong>TF-IDF vectorization</strong><br>Sparse matrix → Logistic Regression</div></div>
+            <div class="flow-step"><div class="flow-circle" style="background:rgba(52,211,153,0.2);color:var(--emerald);">4</div><div class="flow-text"><strong>predict_proba() → class scores</strong><br>[Positive, Negative, Neutral] probabilities</div></div>
+            <div class="flow-step"><div class="flow-circle" style="background:rgba(52,211,153,0.2);color:var(--emerald);">✓</div><div class="flow-text"><strong>Save + return sentiment + tokens</strong><br>→ reviews + predictions tables</div></div>
+          </div>
+        </div>
+
+        <div class="flow-card">
+          <div class="flow-title">🤖 Chatbot Flow</div>
+          <div class="flow-steps">
+            <div class="flow-step"><div class="flow-circle" style="background:rgba(167,139,250,0.2);color:var(--purple);">1</div><div class="flow-text"><strong>User sends message</strong><br>POST /chatbot/message {"message":"..."}</div></div>
+            <div class="flow-step"><div class="flow-circle" style="background:rgba(167,139,250,0.2);color:var(--purple);">2</div><div class="flow-text"><strong>Tier 1: Rule-based matching</strong><br>Substring/keyword match vs intents.json patterns → confidence 0.95</div></div>
+            <div class="flow-step"><div class="flow-circle" style="background:rgba(167,139,250,0.2);color:var(--purple);">3</div><div class="flow-text"><strong>Tier 2: ML intent classification</strong><br>TF-IDF + Logistic Regression (if ≥ 0.40 threshold)</div></div>
+            <div class="flow-step"><div class="flow-circle" style="background:rgba(167,139,250,0.2);color:var(--purple);">4</div><div class="flow-text"><strong>Tier 3: Fallback response</strong><br>Random generic reply at confidence 0.20</div></div>
+            <div class="flow-step"><div class="flow-circle" style="background:rgba(52,211,153,0.2);color:var(--emerald);">✓</div><div class="flow-text"><strong>Save + return response</strong><br>→ chat_logs + predictions tables</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── 10. FRONTEND ─── -->
+    <div class="section" id="frontend">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(52,211,153,0.12);">⚛️</div>
+        <div>
+          <div class="section-num">Section 10</div>
+          <h2>React Frontend Application</h2>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-bottom:24px;">
+        <div style="background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:16px 18px;">
+          <div style="font-size:11px;font-weight:700;color:var(--indigo2);font-family:'JetBrains Mono',monospace;margin-bottom:6px;">/  →  Dashboard</div>
+          <p style="font-size:12px;margin:0;">4 stat cards + 4 Chart.js charts: daily activity, sentiment distribution, product distribution, recent visits</p>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:16px 18px;">
+          <div style="font-size:11px;font-weight:700;color:var(--sky);font-family:'JetBrains Mono',monospace;margin-bottom:6px;">/recognition  →  Face Recognition</div>
+          <p style="font-size:12px;margin:0;">Upload photo or use live webcam. Tab-switch between Identify Customer and Register New VIP.</p>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:16px 18px;">
+          <div style="font-size:11px;font-weight:700;color:var(--purple);font-family:'JetBrains Mono',monospace;margin-bottom:6px;">/products  →  Product Classifier</div>
+          <p style="font-size:12px;margin:0;">Upload product image → top category card + probability progress bars + OpenCV preprocessing stats</p>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:16px 18px;">
+          <div style="font-size:11px;font-weight:700;color:var(--emerald);font-family:'JetBrains Mono',monospace;margin-bottom:6px;">/sentiment  →  Sentiment Analysis</div>
+          <p style="font-size:12px;margin:0;">Enter or select preset review → sentiment badge + confidence + cleaned token chip display</p>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:16px 18px;">
+          <div style="font-size:11px;font-weight:700;color:var(--amber);font-family:'JetBrains Mono',monospace;margin-bottom:6px;">/chatbot  →  FAQ Chatbot</div>
+          <p style="font-size:12px;margin:0;">Full chat UI with quick-FAQ chips, intent tags, confidence badges on every bot message</p>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:16px 18px;">
+          <div style="font-size:11px;font-weight:700;color:var(--rose);font-family:'JetBrains Mono',monospace;margin-bottom:6px;">/statistics  →  Analytics & Logs</div>
+          <p style="font-size:12px;margin:0;">Searchable + filterable predictions table with CSV export. Shows all 4 module types.</p>
+        </div>
+      </div>
+
+      <div style="background:var(--bg2);border:1px solid var(--card-border);border-radius:14px;padding:20px 24px;">
+        <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:12px;">🎨 Dark / Light Theme System</div>
+        <p style="font-size:13px;margin-bottom:14px;">All colors are CSS custom properties in <code>index.css</code>. The toggle button in <code>Header.jsx</code> adds/removes <code>.light</code> on <code>&lt;html&gt;</code>.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;font-size:12px;font-family:'JetBrains Mono',monospace;">
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(255,255,255,0.03);border-radius:8px;">
+            <div style="width:16px;height:16px;border-radius:4px;background:#0f172a;border:1px solid rgba(255,255,255,0.1)"></div>
+            <span style="color:var(--text2);">--bg-primary</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(255,255,255,0.03);border-radius:8px;">
+            <div style="width:16px;height:16px;border-radius:4px;background:#020617;border:1px solid rgba(255,255,255,0.1)"></div>
+            <span style="color:var(--text2);">--bg-sidebar</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(255,255,255,0.03);border-radius:8px;">
+            <div style="width:16px;height:16px;border-radius:4px;background:#f8fafc;border:1px solid rgba(255,255,255,0.1)"></div>
+            <span style="color:var(--text2);">--text-primary</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(255,255,255,0.03);border-radius:8px;">
+            <div style="width:16px;height:16px;border-radius:4px;background:#94a3b8;border:1px solid rgba(255,255,255,0.1)"></div>
+            <span style="color:var(--text2);">--text-secondary</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(255,255,255,0.03);border-radius:8px;">
+            <div style="width:16px;height:16px;border-radius:4px;background:rgba(30,41,59,0.7);border:1px solid rgba(255,255,255,0.1)"></div>
+            <span style="color:var(--text2);">--glass-bg</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(255,255,255,0.03);border-radius:8px;">
+            <div style="width:16px;height:16px;border-radius:4px;background:rgba(15,23,42,0.9);border:1px solid rgba(255,255,255,0.1)"></div>
+            <span style="color:var(--text2);">--bg-input</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── 11. FILE STRUCTURE ─── -->
+    <div class="section" id="structure">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(248,113,113,0.12);">📁</div>
+        <div>
+          <div class="section-num">Section 11</div>
+          <h2>Project File Structure</h2>
+        </div>
+      </div>
+
+      <div class="file-tree">
+<span class="ft-dir">smart-retail-ai/</span>
+│
+├── <span class="ft-dir">app/</span>                              <span class="ft-comment"># FastAPI backend</span>
+│   ├── <span class="ft-important">main.py</span>                        <span class="ft-comment"># App entry, CORS, security middleware</span>
+│   ├── <span class="ft-important">config.py</span>                      <span class="ft-comment"># Settings: DB URL, model paths, thresholds</span>
+│   ├── <span class="ft-important">database.py</span>                    <span class="ft-comment"># SQLAlchemy models & DB session factory</span>
+│   ├── <span class="ft-important">pipeline.py</span>                    <span class="ft-comment"># ML model singleton loader (loads .pkl at startup)</span>
+│   ├── <span class="ft-dir">models/</span>
+│   │   ├── <span class="ft-file">schemas.py</span>                 <span class="ft-comment"># Pydantic request/response schemas</span>
+│   │   ├── <span class="ft-db">face_db.pkl</span>                <span class="ft-comment"># ← Face encodings for registered customers</span>
+│   │   ├── <span class="ft-file">product_classifier.pkl</span>
+│   │   ├── <span class="ft-file">sentiment_model.pkl</span>
+│   │   ├── <span class="ft-file">sentiment_vectorizer.pkl</span>
+│   │   ├── <span class="ft-file">chatbot_model.pkl</span>
+│   │   └── <span class="ft-file">chatbot_vectorizer.pkl</span>
+│   ├── <span class="ft-dir">routers/</span>
+│   │   ├── <span class="ft-file">vision.py</span>                  <span class="ft-comment"># /vision/* routes</span>
+│   │   ├── <span class="ft-file">nlp.py</span>                     <span class="ft-comment"># /nlp/* routes</span>
+│   │   ├── <span class="ft-file">chatbot.py</span>                 <span class="ft-comment"># /chatbot/* routes</span>
+│   │   └── <span class="ft-file">dashboard.py</span>               <span class="ft-comment"># /dashboard/* routes</span>
+│   └── <span class="ft-dir">services/</span>
+│       ├── <span class="ft-file">cv_service.py</span>              <span class="ft-comment"># OpenCV pipeline + face recognition logic</span>
+│       ├── <span class="ft-file">nlp_service.py</span>             <span class="ft-comment"># NLTK preprocessing + sentiment logic</span>
+│       └── <span class="ft-file">chatbot_service.py</span>         <span class="ft-comment"># Rule engine + ML intent classification</span>
+│
+├── <span class="ft-dir">data/</span>
+│   ├── <span class="ft-file">intents.json</span>                   <span class="ft-comment"># Chatbot FAQ rules: patterns + response arrays</span>
+│   ├── <span class="ft-file">haarcascade_frontalface_default.xml</span>  <span class="ft-comment"># Haar Cascade face detector</span>
+│   └── <span class="ft-dir">nltk_data/</span>                     <span class="ft-comment"># Auto-downloaded: stopwords, punkt, wordnet</span>
+│
+├── <span class="ft-dir">frontend/</span>                          <span class="ft-comment"># React + Vite SPA</span>
+│   ├── <span class="ft-dir">src/</span>
+│   │   ├── <span class="ft-important">App.jsx</span>                    <span class="ft-comment"># Root: routing + dark/light theme state</span>
+│   │   ├── <span class="ft-important">index.css</span>                  <span class="ft-comment"># CSS variable theme system (dark & light)</span>
+│   │   ├── <span class="ft-dir">components/</span>
+│   │   │   ├── <span class="ft-file">Header.jsx</span>             <span class="ft-comment"># Top nav + theme toggle button</span>
+│   │   │   ├── <span class="ft-file">Sidebar.jsx</span>            <span class="ft-comment"># Left navigation menu</span>
+│   │   │   └── <span class="ft-file">StatCard.jsx</span>           <span class="ft-comment"># Reusable KPI metric card</span>
+│   │   ├── <span class="ft-dir">pages/</span>
+│   │   │   ├── <span class="ft-file">Dashboard.jsx</span>
+│   │   │   ├── <span class="ft-file">CustomerRecognition.jsx</span>
+│   │   │   ├── <span class="ft-file">ProductClassification.jsx</span>
+│   │   │   ├── <span class="ft-file">SentimentAnalysis.jsx</span>
+│   │   │   ├── <span class="ft-file">ChatbotPage.jsx</span>
+│   │   │   └── <span class="ft-file">StatisticsPage.jsx</span>
+│   │   └── <span class="ft-dir">services/</span>
+│   │       └── <span class="ft-file">api.js</span>                 <span class="ft-comment"># Axios client: baseURL + X-API-Key header</span>
+│   ├── <span class="ft-file">package.json</span>
+│   └── <span class="ft-file">vite.config.js</span>
+│
+├── <span class="ft-db">smart_retail.db</span>                    <span class="ft-comment"># ← SQLite DATABASE (all runtime data lives here)</span>
+├── <span class="ft-file">requirements.txt</span>                   <span class="ft-comment"># Python package dependencies</span>
+├── <span class="ft-important">train_models.py</span>                    <span class="ft-comment"># Trains & saves all .pkl model artifacts</span>
+└── <span class="ft-file">run_backend.sh</span>                     <span class="ft-comment"># Shell: activate venv + start uvicorn</span>
+      </div>
+    </div>
+
+    <!-- ─── 12. RUN ─── -->
+    <div class="section" id="run">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(52,211,153,0.12);">🚀</div>
+        <div>
+          <div class="section-num">Section 12</div>
+          <h2>How to Run the Project</h2>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:24px;">
+        <div class="cmd-block">
+          <div class="cmd-header">
+            <span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span>
+            Step 1 — Backend Setup (Python)
+          </div>
+          <div class="cmd-body">
+<span class="cmd-comment"># Navigate to project root</span>
+<span class="cmd-cmd">cd smart-retail-ai</span>
+
+<span class="cmd-comment"># Create virtual environment</span>
+<span class="cmd-cmd">python -m venv venv</span>
+
+<span class="cmd-comment"># Activate virtual environment</span>
+<span class="cmd-cmd">source venv/bin/activate</span>    <span class="cmd-comment"># macOS / Linux</span>
+<span class="cmd-cmd">venv\Scripts\activate</span>       <span class="cmd-comment"># Windows</span>
+
+<span class="cmd-comment"># Install all Python dependencies</span>
+<span class="cmd-cmd">pip install -r requirements.txt</span>
+
+<span class="cmd-comment"># Train ML models — generates all .pkl files in app/models/</span>
+<span class="cmd-cmd">python train_models.py</span>
+
+<span class="cmd-comment"># Start the FastAPI server on port 8000</span>
+<span class="cmd-cmd">uvicorn app.main:app --reload --port 8000</span>
+          </div>
+        </div>
+
+        <div class="cmd-block">
+          <div class="cmd-header">
+            <span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span>
+            Step 2 — Frontend Setup (Node.js) — Open a new terminal
+          </div>
+          <div class="cmd-body">
+<span class="cmd-comment"># Navigate to frontend directory</span>
+<span class="cmd-cmd">cd smart-retail-ai/frontend</span>
+
+<span class="cmd-comment"># Install Node.js packages</span>
+<span class="cmd-cmd">npm install</span>
+
+<span class="cmd-comment"># Start the Vite development server</span>
+<span class="cmd-cmd">npm run dev</span>
+
+<span class="cmd-comment"># App opens at http://localhost:3000</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:var(--bg2);border:1px solid var(--card-border);border-radius:14px;overflow:hidden;">
+        <table class="access-table">
+          <thead>
+            <tr>
+              <th>Service</th>
+              <th>Description</th>
+              <th>URL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Frontend App</td><td>React SPA with all 6 pages</td><td>http://localhost:3000</td></tr>
+            <tr><td>Backend REST API</td><td>FastAPI JSON endpoints</td><td>http://localhost:8000</td></tr>
+            <tr><td>Swagger UI</td><td>Interactive API testing</td><td>http://localhost:8000/docs</td></tr>
+            <tr><td>ReDoc</td><td>Alternative API documentation</td><td>http://localhost:8000/redoc</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div>
+      <strong>Smart Retail AI</strong> v1.0 — Full-stack AI Retail Intelligence Platform<br>
+      <span style="font-size:11px;">FastAPI · React · SQLite · OpenCV · NLTK · Scikit-learn</span>
+    </div>
+    <div style="text-align:right;">
+      <span>Project Documentation</span><br>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--indigo2);">Generated by Antigravity AI</span>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<script>
+  // Highlight active nav item on scroll
+  const sections = document.querySelectorAll('.section');
+  const navLinks = document.querySelectorAll('.nav-item');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navLinks.forEach(link => {
+          link.style.color = '';
+          link.style.borderLeftColor = 'transparent';
+        });
+        const activeLink = document.querySelector(`.nav-item[href="#${id}"]`);
+        if (activeLink) {
+          activeLink.style.color = '#f8fafc';
+          activeLink.style.borderLeftColor = '#6366f1';
+        }
+      }
+    });
+  }, { threshold: 0.3 });
+
+  sections.forEach(section => observer.observe(section));
+
+  // Smooth scroll for nav
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+
+</body>
+</html>
