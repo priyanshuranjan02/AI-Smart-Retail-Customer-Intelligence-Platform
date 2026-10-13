@@ -1,4 +1,5 @@
 import logging
+import secrets
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request, HTTPException, Security, status
 from fastapi.security.api_key import APIKeyHeader
@@ -44,34 +45,61 @@ app = FastAPI(
 # CORS configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=[
+        "https://ai-smart-retail-customer-intelligence.vercel.app",
+        "http://localhost:3000",
+        "http://localhost:5173",
+    ],
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type", "Authorization", "X-API-Key"],
 )
 
 
-# Security API Key Middleware check
 @app.middleware("http")
 async def verify_api_key(request: Request, call_next):
-    # Allow public endpoints (Swagger docs, health check, OPTIONS pre-flight)
-    public_paths = ["/docs", "/redoc", "/openapi.json", "/", "/health"]
+    # Public endpoints and browser CORS preflight requests
+    public_paths = {
+        "/",
+        "/health",
+        "/docs",
+        "/redoc",
+        "/openapi.json",
+    }
+
     if request.method == "OPTIONS" or request.url.path in public_paths:
         return await call_next(request)
 
-    api_key = request.headers.get("X-API-Key")
-    if not api_key or api_key != settings.API_KEY:
-        # For ease of developer testing, if environment is development, allow requests with default key warning
-        if settings.ENVIRONMENT == "development" and not api_key:
-            pass  # Allow default dev pass
-        else:
-            return JSONResponse(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                content={"detail": "Invalid or missing X-API-Key header."},
-            )
+    configured_key = settings.API_KEY.strip()
+    previous_key = settings.PREVIOUS_API_KEY.strip()
+    supplied_key = request.headers.get("X-API-Key", "").strip()
+    environment = settings.ENVIRONMENT.lower()
 
-    response = await call_next(request)
-    return response
+    # Allow keyless requests only for local development/testing
+    # when no key is configured at all.
+    if not configured_key:
+        if environment in {"development", "dev", "test"} and not supplied_key:
+            return await call_next(request)
+
+        return JSONResponse(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            content={"detail": "API authentication is not configured."},
+        )
+
+    valid_keys = [
+        key for key in (configured_key, previous_key) if key
+    ]
+
+    if not supplied_key or not any(
+        secrets.compare_digest(supplied_key, valid_key)
+        for valid_key in valid_keys
+    ):
+        return JSONResponse(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            content={"detail": "Invalid or missing API key."},
+        )
+
+    return await call_next(request)
 
 
 # Register Routers

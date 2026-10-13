@@ -9,9 +9,9 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - ENVIRONMENT=production
-      - API_KEY=smart-retail-secret-key-2026
-      - DATABASE_URL=sqlite:///./smart_retail.db
+      ENVIRONMENT: production
+      API_KEY: ${API_KEY:?Set API_KEY in your local .env file}
+      DATABASE_URL: ${DATABASE_URL:-sqlite:///./smart_retail.db}
     volumes:
       - ./data:/app/data
       - ./app/models:/app/app/models

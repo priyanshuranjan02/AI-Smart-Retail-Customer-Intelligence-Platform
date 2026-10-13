@@ -5,7 +5,8 @@ from pydantic_settings import BaseSettings
 class Settings(BaseSettings):
     PROJECT_NAME: str = "AI-Powered Smart Retail & Customer Intelligence Platform"
     VERSION: str = "1.0.0"
-    API_KEY: str = "smart-retail-secret-key-2026"
+    API_KEY: str = ""
+    PREVIOUS_API_KEY: str = ""
     ENVIRONMENT: str = "development"
     DATABASE_URL: str = "sqlite:///./smart_retail.db"
     LOG_LEVEL: str = "INFO"
@@ -34,3 +35,12 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
+
+# Fail safely if production starts without a configured API key.
+if (
+    settings.ENVIRONMENT.lower() in {"production", "prod"}
+    and not settings.API_KEY.strip()
+):
+    raise RuntimeError(
+        "API_KEY must be configured through an environment variable in production."
+    )

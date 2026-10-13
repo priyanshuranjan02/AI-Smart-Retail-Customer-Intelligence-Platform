@@ -70,3 +70,77 @@ def test_dashboard_stats_endpoint(client):
     assert "sentiment_distribution" in data
     assert "daily_visits" in data
     assert "monthly_visits" in data
+
+
+def test_protected_route_rejects_missing_api_key(client, monkeypatch):
+    monkeypatch.setattr(settings, "API_KEY", "test-only-secret")
+    monkeypatch.setattr(settings, "ENVIRONMENT", "production")
+
+    response = client.get("/dashboard/stats")
+
+    assert response.status_code == 401
+
+
+def test_protected_route_rejects_invalid_api_key(client, monkeypatch):
+    monkeypatch.setattr(settings, "API_KEY", "test-only-secret")
+    monkeypatch.setattr(settings, "ENVIRONMENT", "production")
+
+    response = client.get(
+        "/dashboard/stats",
+        headers={"X-API-Key": "incorrect-test-key"},
+    )
+
+    assert response.status_code == 401
+
+
+def test_protected_route_accepts_valid_api_key(client, monkeypatch):
+    monkeypatch.setattr(settings, "API_KEY", "test-only-secret")
+    monkeypatch.setattr(settings, "ENVIRONMENT", "production")
+
+    response = client.get(
+        "/dashboard/stats",
+        headers={"X-API-Key": "test-only-secret"},
+    )
+
+    assert response.status_code == 200
+
+
+def test_production_rejects_requests_when_api_key_is_unconfigured(
+    client, monkeypatch
+):
+    monkeypatch.setattr(settings, "API_KEY", "")
+    monkeypatch.setattr(settings, "ENVIRONMENT", "production")
+
+    response = client.get("/dashboard/stats")
+
+    assert response.status_code == 503
+
+
+def test_health_endpoint_remains_public(client, monkeypatch):
+    monkeypatch.setattr(settings, "API_KEY", "")
+    monkeypatch.setattr(settings, "ENVIRONMENT", "production")
+
+    response = client.get("/health")
+
+    assert response.status_code == 200
+
+
+def test_previous_api_key_accepted_during_rotation(
+    client, monkeypatch
+):
+    monkeypatch.setattr(
+        settings, "API_KEY", "fresh-test-secret"
+    )
+    monkeypatch.setattr(
+        settings, "PREVIOUS_API_KEY", "previous-test-secret"
+    )
+    monkeypatch.setattr(
+        settings, "ENVIRONMENT", "production"
+    )
+
+    response = client.get(
+        "/dashboard/stats",
+        headers={"X-API-Key": "previous-test-secret"},
+    )
+
+    assert response.status_code == 200
