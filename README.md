@@ -199,7 +199,11 @@ PYTHONPATH=. pytest -v
 
 ## 🔑 5. API Documentation & Endpoint Reference
 
-All protected endpoints require the header `X-API-Key: smart-retail-secret-key-2026`.
+Protected backend endpoints require the `X-API-Key` header.
+The key is configured server-side through environment variables and must
+never be committed to source control or embedded in browser-side code.
+
+The deployed frontend accesses the backend through a server-side API proxy.
 
 | Method | Endpoint | Description | Request Body / File | Sample Response |
 | :--- | :--- | :--- | :--- | :--- |

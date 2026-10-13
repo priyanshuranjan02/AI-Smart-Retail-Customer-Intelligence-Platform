@@ -5,8 +5,10 @@ __pycache__/
 *.pyo
 *.pyd
 
-# Environment
+# Environment variables and secrets
 .env
+.env.*
+!.env.example
 
 # Models (optional if too large)
 *.h5
